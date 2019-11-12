@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Project VanillaJS</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="main.css" >
+  </head>
+  <body>
+
+    <div class="container">
+      <h1 class="text-center">Ciber Juana Lemus</h1>
+
+      <form id="formulario">
+        <input class="form-control my-3" id="nombreUsuario" type="text" placeholder="Usuario" required>
+        <button type="submit" class="btn btn-primary float-right mb-5">Agregar usuario</button>
+      </form>
+
+      <table class="table mt-5">
+          <thead>
+            <tr>
+              <th scope="col">Usuario</th>
+              <th scope="col">Hora inicio</th>
+              <th scope="col">Hora fin</th>
+              <th scope="col">Tiempo</th>
+              <th scope="col">Tarifa</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="listaUsuarios">
+          </tbody>
+        </table>
+
+
+      <button type="button" id="limpiarCache" class="btn btn-danger float-right mt-5">Limpiar datos</button>
+    </div>
+
+
+
+    <script src="app.js"></script>
+    <script src="http://momentjs.com/downloads/moment.min.js"></script>
+  </body>
+</html>
