@@ -4,6 +4,9 @@ const formularioUI = document.querySelector('#formulario');
 const listaUsuariosUI= document.querySelector('#listaUsuarios');
 const limpiarUI = document.querySelector('#limpiarCache');
 
+const btnTiempo = document.querySelector('#tiempo');
+const btnBorrar = document.querySelector('#borrar');
+
 let arrayUsuarios = [];
 
 // FUNCIONES
@@ -47,12 +50,13 @@ MostrarData = () => {
                 <td>${data.tiempo}</td>
                 <td>$ ${data.tarifa}.00 MXN</td>
                 <td>
-                    <i class='material-icons mr-3'>
-                        schedule
-                    </i>
-                    <i class='material-icons ml-3'>
-                        delete
-                    </i>
+                    <button class="btn btn-sm btn-success mr-2" id="tiempo">
+                        Finalizar
+                    </button>
+
+                    <button class="btn btn-sm btn-danger ml-2" id="borrar">
+                        Borrar
+                    </button>
                 </td>
             </tr>`
         });
@@ -128,25 +132,24 @@ document.addEventListener('DOMContentLoaded', MostrarData)
 
 listaUsuariosUI.addEventListener('click', (e) => {
     e.preventDefault();
-    //
-    // console.log(e.target.innerHTML)
 
     const accion = e.target.innerHTML.trim();
     const accionFinal = e.path[2].childNodes[1].innerHTML.trim();
-    if (accion === 'schedule' || accion === 'delete') {
+
+    console.log(accionFinal)
+    if (accion === 'Finalizar' || accion === 'Borrar') {
 
         switch (accion) {
-            case 'schedule':
+            case 'Finalizar':
                 checarTiempo(accionFinal);
                 break;
 
-            case 'delete':
+            case 'Borrar':
                 eliminarUsuario(accionFinal);
                 break;
         }
     }
 });
-
 
 // Limpiar cache localstorage
 limpiarUI.addEventListener('click', (e) => {
