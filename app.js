@@ -1,15 +1,13 @@
-// VARIABLES
 
+// Declarar variables
 const formularioUI = document.querySelector('#formulario');
-const listaUsuariosUI= document.querySelector('#listaUsuarios');
+const listaUsuariosUI = document.querySelector('#listaUsuarios');
 const limpiarUI = document.querySelector('#limpiarCache');
 
 let arrayUsuarios = [];
+// Funciones
+CrearUsuario = usuario => {
 
-// FUNCIONES
-CrearUsuario = (usuario) => {
-
-    // let time = $inicio.toTimeString().substring(0, time.indexOf(' '));
     usuario = {
         usuario: usuario,
         inicio: moment().format('hh:mm:ss a'),
@@ -18,14 +16,14 @@ CrearUsuario = (usuario) => {
         finTiempo: '0',
         tiempo: '0',
         tarifa: '0'
-    }
+    };
     arrayUsuarios.push(usuario);
 
     return usuario;
 }
 
 GuardarUsuario = () => {
-    localStorage.setItem('usuarios', JSON.stringify(arrayUsuarios))
+    localStorage.setItem('usuarios', JSON.stringify(arrayUsuarios));
     MostrarData();
 }
 
@@ -40,26 +38,25 @@ MostrarData = () => {
     } else {
         arrayUsuarios.forEach(data => {
             listaUsuariosUI.innerHTML += `
-            <tr>
-                <td>${data.usuario} </td>
-                <td>${data.inicio}</td>
-                <td>${data.fin}</td>
-                <td>${data.tiempo}</td>
-                <td>$ ${data.tarifa}.00 MXN</td>
-                <td>
-                    <button class="btn btn-sm btn-success mr-2" id="tiempo">
-                        Finalizar
-                    </button>
+                <tr>
+                    <td>${data.usuario} </td>
+                    <td>${data.inicio}</td>
+                    <td>${data.fin}</td>
+                    <td>${data.tiempo}</td>
+                    <td>$ ${data.tarifa}.00 MXN</td>
+                    <td>
+                        <button class='btn btn-sm btn-success mr-2' id='tiempo'>
+                            Finalizar
+                        </button>
 
-                    <button class="btn btn-sm btn-danger ml-2" id="borrar">
-                        Borrar
-                    </button>
-                </td>
-            </tr>`
+                        <button class='btn btn-sm btn-danger ml-2' id='borrar'>
+                            Borrar
+                        </button>
+                    </td>
+                </tr>`
         });
     }
 }
-
 
 checarTiempo = (usuario) => {
     //Encuentra el index del array
@@ -79,10 +76,13 @@ checarTiempo = (usuario) => {
     inicio = usuarios[indexArray].inicioTiempo;
     fin = usuarios[indexArray].finTiempo;
 
-    f = moment(fin);
-    i = moment(inicio);
+    finDateObj = new Date(fin);
+    inicioDateObj = new Date(inicio);
 
-    diferencia =  moment.duration(f.diff(i));
+    let finDateMoment = moment(finDateObj)
+    let inicioDateMoment = moment(inicioDateObj)
+
+    diferencia = moment.duration(finDateMoment.diff(inicioDateMoment));
     final = diferencia.hours() + ' horas ' + ' : ' + diferencia.minutes() + ' minutos ';
     minutosTotales = diferencia.hours() * 60 + diferencia.minutes();
     arrayUsuarios[indexArray].tiempo = final;
@@ -130,8 +130,6 @@ document.addEventListener('DOMContentLoaded', MostrarData)
 listaUsuariosUI.addEventListener('click', (e) => {
     e.preventDefault();
 
-    // console.log(e.target.innerText)
-
     const accion = e.target.innerText;
     const accionFinal = e.path[2].childNodes[1].innerText;
 
@@ -149,8 +147,13 @@ listaUsuariosUI.addEventListener('click', (e) => {
     }
 });
 
+
+// btnTiempo.addEventListener('click', (e) => {
+//     console.log(e)
+// })
+
 // Limpiar cache localstorage
 limpiarUI.addEventListener('click', (e) => {
     localStorage.clear();
     MostrarData();
-})
+});
