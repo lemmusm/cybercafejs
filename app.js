@@ -88,9 +88,10 @@ checarTiempo = (usuario) => {
     arrayUsuarios[indexArray].tiempo = final;
 
     // Formula para obtener costo
-    costo = minutosTotales * 8 / 60;
+    costo = minutosTotales * 10 / 60;
+    
     // Asigna valor a elemento tarifa del objeto usuario
-    arrayUsuarios[indexArray].tarifa = Math.ceil(costo);
+    arrayUsuarios[indexArray].tarifa = Math.ceil(costo + 1.5);
 
     // Guarda valores
     GuardarUsuario();
