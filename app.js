@@ -4,9 +4,6 @@ const formularioUI = document.querySelector('#formulario');
 const listaUsuariosUI = document.querySelector('#listaUsuarios');
 const limpiarUI = document.querySelector('#limpiarCache');
 
-let btnTiempo = document.querySelector('#tiempo');
-let btnBorrar = document.querySelector('#borrar');
-
 let arrayUsuarios = [];
 // Funciones
 CrearUsuario = usuario => {
@@ -90,8 +87,14 @@ checarTiempo = (usuario) => {
     // Formula para obtener costo
     costo = minutosTotales * 10 / 60;
     
+    if (minutosTotales <= 10) {
+        costo = costo + 2
+    } else if (minutosTotales >= 11 || minutosTotales <= 30) {
+        costo = costo + 1.5
+    }
+    
     // Asigna valor a elemento tarifa del objeto usuario
-    arrayUsuarios[indexArray].tarifa = Math.ceil(costo + 1.5);
+    arrayUsuarios[indexArray].tarifa = Math.ceil(costo);
 
     // Guarda valores
     GuardarUsuario();
@@ -148,11 +151,6 @@ listaUsuariosUI.addEventListener('click', (e) => {
         }
     }
 });
-
-
-// btnTiempo.addEventListener('click', (e) => {
-//     console.log(e)
-// })
 
 // Limpiar cache localstorage
 limpiarUI.addEventListener('click', (e) => {
