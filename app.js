@@ -4,6 +4,9 @@ const formularioUI = document.querySelector('#formulario');
 const listaUsuariosUI = document.querySelector('#listaUsuarios');
 const limpiarUI = document.querySelector('#limpiarCache');
 
+let btnTiempo = document.querySelector('#tiempo');
+let btnBorrar = document.querySelector('#borrar');
+
 let arrayUsuarios = [];
 // Funciones
 CrearUsuario = usuario => {
@@ -11,7 +14,7 @@ CrearUsuario = usuario => {
     usuario = {
         usuario: usuario,
         inicio: moment().format('hh:mm:ss a'),
-        inicioTiempo: moment().format('DD/MM/YYYY HH:mm:ss'),
+        inicioTiempo: new Date(),
         fin: '0',
         finTiempo: '0',
         tiempo: '0',
@@ -45,11 +48,11 @@ MostrarData = () => {
                     <td>${data.tiempo}</td>
                     <td>$ ${data.tarifa}.00 MXN</td>
                     <td>
-                        <button class='btn btn-sm btn-success mr-2' id='tiempo'>
+                        <button class='btn btn-sm btn-success mr-2' data-id='${data.usuario}'>
                             Finalizar
                         </button>
 
-                        <button class='btn btn-sm btn-danger ml-2' id='borrar'>
+                        <button class='btn btn-sm btn-danger ml-2' data-id='${data.usuario}' id='borrar'>
                             Borrar
                         </button>
                     </td>
@@ -69,20 +72,17 @@ checarTiempo = (usuario) => {
 
 
     arrayUsuarios[indexArray].fin = moment().format('hh:mm:ss a');
-    arrayUsuarios[indexArray].finTiempo = moment().format('DD/MM/YYYY HH:mm:ss');
+    arrayUsuarios[indexArray].finTiempo = new Date();
     GuardarUsuario();
 
     usuarios = JSON.parse(localStorage.getItem('usuarios'));
     inicio = usuarios[indexArray].inicioTiempo;
     fin = usuarios[indexArray].finTiempo;
 
-    finDateObj = new Date(fin);
-    inicioDateObj = new Date(inicio);
+    f = moment(fin);
+    i = moment(inicio);
 
-    let finDateMoment = moment(finDateObj)
-    let inicioDateMoment = moment(inicioDateObj)
-
-    diferencia = moment.duration(finDateMoment.diff(inicioDateMoment));
+    diferencia = moment.duration(f.diff(i));
     final = diferencia.hours() + ' horas ' + ' : ' + diferencia.minutes() + ' minutos ';
     minutosTotales = diferencia.hours() * 60 + diferencia.minutes();
     arrayUsuarios[indexArray].tiempo = final;
@@ -131,17 +131,18 @@ listaUsuariosUI.addEventListener('click', (e) => {
     e.preventDefault();
 
     const accion = e.target.innerText;
-    const accionFinal = e.path[2].childNodes[1].innerText;
+
+    const id = e.target.dataset.id;
 
     if (accion === 'Finalizar' || accion === 'Borrar') {
 
         switch (accion) {
             case 'Finalizar':
-                checarTiempo(accionFinal);
+                checarTiempo(id);
                 break;
 
             case 'Borrar':
-                eliminarUsuario(accionFinal);
+                eliminarUsuario(id);
                 break;
         }
     }
