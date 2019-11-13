@@ -4,9 +4,6 @@ const formularioUI = document.querySelector('#formulario');
 const listaUsuariosUI= document.querySelector('#listaUsuarios');
 const limpiarUI = document.querySelector('#limpiarCache');
 
-const btnTiempo = document.querySelector('#tiempo');
-const btnBorrar = document.querySelector('#borrar');
-
 let arrayUsuarios = [];
 
 // FUNCIONES
@@ -82,8 +79,8 @@ checarTiempo = (usuario) => {
     inicio = usuarios[indexArray].inicioTiempo;
     fin = usuarios[indexArray].finTiempo;
 
-    i = moment(inicio);
     f = moment(fin);
+    i = moment(inicio);
 
     diferencia =  moment.duration(f.diff(i));
     final = diferencia.hours() + ' horas ' + ' : ' + diferencia.minutes() + ' minutos ';
@@ -93,7 +90,7 @@ checarTiempo = (usuario) => {
     // Formula para obtener costo
     costo = minutosTotales * 8 / 60;
     // Asigna valor a elemento tarifa del objeto usuario
-    arrayUsuarios[indexArray].tarifa = Math.round(costo);
+    arrayUsuarios[indexArray].tarifa = Math.ceil(costo);
 
     // Guarda valores
     GuardarUsuario();
@@ -133,10 +130,11 @@ document.addEventListener('DOMContentLoaded', MostrarData)
 listaUsuariosUI.addEventListener('click', (e) => {
     e.preventDefault();
 
-    const accion = e.target.innerHTML.trim();
-    const accionFinal = e.path[2].childNodes[1].innerHTML.trim();
+    // console.log(e.target.innerText)
 
-    console.log(accionFinal)
+    const accion = e.target.innerText;
+    const accionFinal = e.path[2].childNodes[1].innerText;
+
     if (accion === 'Finalizar' || accion === 'Borrar') {
 
         switch (accion) {
